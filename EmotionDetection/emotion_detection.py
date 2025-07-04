@@ -19,7 +19,7 @@ def emotion_detector(text_to_analyse):
 
     #Get top-level emotion name value pairs and populate extracted dict
     extracted = {}
-   '''Use get() method to avoid error or crashes. If no vaue returns default specified, i.e first instance list with empty dict and in second instance an empty dict'''
+    '''Use get() method to avoid error or crashes. If no vaue returns default specified, i.e first instance list with empty dict and in second instance an empty dict'''
 
     emotions = formatted_response.get('emotionPredictions', [{}])[0].get('emotion', {})
     extracted.update(emotions)
