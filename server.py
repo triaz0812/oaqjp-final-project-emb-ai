@@ -23,11 +23,15 @@ def emot_detector():
     dominant_emotion = response.get('dominant_emotion')
 
     # Create formatted output string
-    formatted_response = (
-        f"For the given statement, the system response is "
-        f"'anger': {anger}, 'disgust': {disgust}, 'fear': {fear}, "
-        f"'joy': {joy} and 'sadness': {sadness}. The dominant emotion is {dominant_emotion}."
-    )
+    # Check dominant_emotion is not None
+    if dominant_emotion is not None:
+        formatted_response = (
+            f"For the given statement, the system response is "
+            f"'anger': {anger}, 'disgust': {disgust}, 'fear': {fear}, "
+            f"'joy': {joy} and 'sadness': {sadness}. The dominant emotion is {dominant_emotion}."
+        )
+    else:
+        formatted_response = "Invalid text! Please try again!."
 
     return formatted_response
 

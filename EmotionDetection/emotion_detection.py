@@ -17,19 +17,22 @@ def emotion_detector(text_to_analyse):
     #Parse API response
     formatted_response = json.loads(response.text)
 
-    #Get top-level emotion name value pairs and populate extracted dict
-    extracted = {}
+    # Check response status code is 200, get top-level emotion name value pairs and populate extracted dict
     '''Use get() method to avoid error or crashes. If no vaue returns default specified, i.e first instance list with empty dict and in second instance an empty dict'''
+    extracted = {} 
+    if response.status_code == 200:
+        print(response.status_code)
+        emotions = formatted_response.get('emotionPredictions', [{}])[0].get('emotion', {})
+        extracted.update(emotions)
 
-    emotions = formatted_response.get('emotionPredictions', [{}])[0].get('emotion', {})
-    extracted.update(emotions)
-
-    #Calculate dominant emotion
-    '''Use max() method with key to find highest score. Avoids using manual loop and more efficient. Could use an if statement to check extracted is not empty for more stability. May add later'''
-
-    dominant_emotion = max(extracted, key=extracted.get)
-    extracted['dominant_emotion'] = dominant_emotion
-
+        #Calculate dominant emotion
+        '''Use max() method with key to find highest score. Avoids using manual loop and more efficient. Could use an if statement to check extracted is not empty for more stability. May add later'''
+        dominant_emotion = max(extracted, key=extracted.get)
+        extracted['dominant_emotion'] = dominant_emotion
+    # if status code == 400, set dict to none
+    elif response.status_code == 400:
+        print(response.status_code)
+        extracted.update({"anger": None, "disgust": None, "fear": None, "joy": None, "sadness": None, "dominant_emotion":None})
     #Return result
     return extracted
    
